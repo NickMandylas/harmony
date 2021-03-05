@@ -29,7 +29,11 @@ export class User {
 
   @Field(() => UserStatus)
   @Enum(() => UserStatus)
-  status = UserStatus.IN_QUEUE;
+  status = UserStatus.STANDBY;
+
+  @Field(() => Boolean)
+  @Property({ type: "boolean" })
+  banned = false;
 
   @Field(() => String)
   @Property({ type: "date" })

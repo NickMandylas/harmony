@@ -1,9 +1,10 @@
-import * as Fastify from "fastify";
+import { fastify, FastifyInstance } from "fastify";
 import mercurius from "mercurius";
 import ormConfig from "orm.config";
-import fastifyCors from "fastify-cors";
 import fastifySession from "fastify-session";
+import fastifyCors from "fastify-cors";
 import fastifyCookie from "fastify-cookie";
+import { Twilio } from "twilio";
 import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
 import { createSchema } from "utils/schema";
 import { IncomingMessage, Server, ServerResponse } from "http";
@@ -11,7 +12,7 @@ import { Constants, Redis, Session } from "utils";
 
 export default class Application {
   public orm: MikroORM<IDatabaseDriver<Connection>>;
-  public host: Fastify.FastifyInstance<Server, IncomingMessage, ServerResponse>;
+  public host: FastifyInstance<Server, IncomingMessage, ServerResponse>;
 
   public connect = async (): Promise<void> => {
     try {
@@ -28,7 +29,7 @@ export default class Application {
   };
 
   public init = async (): Promise<void> => {
-    this.host = Fastify.fastify({
+    this.host = fastify({
       logger: {
         prettyPrint: !Constants.__prod__,
       },
@@ -49,6 +50,10 @@ export default class Application {
           res,
           redis: Redis(),
           em: this.orm.em.fork(),
+          twilio: new Twilio(
+            process.env.TWILIO_SID!,
+            process.env.TWILIO_TOKEN!,
+          ),
         }),
         graphiql: Constants.__prod__ ? false : "playground",
         jit: 1,

@@ -1,7 +1,7 @@
 import "dotenv/config";
-import { MikroORM } from "@mikro-orm/core";
 import path from "path";
-import { Constants } from "utils";
+import { MikroORM } from "@mikro-orm/core";
+import { __prod__ } from "./utils/constants";
 
 export default {
   migrations: {
@@ -14,10 +14,10 @@ export default {
   password: process.env.DB_PASSWORD,
   dbName: process.env.DB_NAME,
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  tsNode: !Constants.__prod__,
+  port: 5432,
+  tsNode: !__prod__,
   entities: ["./dist/entities/**/*.js"],
   entitiesTs: ["./src/entities/**/*.ts"],
   type: "postgresql",
-  debug: !Constants.__prod__,
+  debug: !__prod__,
 } as Parameters<typeof MikroORM.init>[0];
