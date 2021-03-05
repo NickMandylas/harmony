@@ -1,10 +1,13 @@
 import * as Fastify from "fastify";
 import mercurius from "mercurius";
 import ormConfig from "orm.config";
+import fastifyCors from "fastify-cors";
+import fastifySession from "fastify-session";
+import fastifyCookie from "fastify-cookie";
 import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
 import { createSchema } from "utils/schema";
 import { IncomingMessage, Server, ServerResponse } from "http";
-import { Constants, Redis } from "utils";
+import { Constants, Redis, Session } from "utils";
 
 export default class Application {
   public orm: MikroORM<IDatabaseDriver<Connection>>;
@@ -31,6 +34,10 @@ export default class Application {
       },
       trustProxy: Constants.__prod__ ? 1 : 0,
     });
+
+    this.host.register(fastifyCors, { origin: true, credentials: true }); // TODO - Fix this in future for multiple targets.
+    this.host.register(fastifyCookie);
+    this.host.register(fastifySession, Session.config);
 
     try {
       const schema = await createSchema();

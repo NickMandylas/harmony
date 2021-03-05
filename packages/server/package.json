@@ -14,6 +14,10 @@
     "dotenv": "^8.2.0",
     "express-session": "^1.17.1",
     "fastify": "^3.13.0",
+    "fastify-autoload": "^3.5.2",
+    "fastify-cookie": "^5.1.0",
+    "fastify-cors": "^5.2.0",
+    "fastify-session": "^5.2.1",
     "graphql": "^15.5.0",
     "ioredis": "^4.23.0",
     "mercurius": "^7.2.0",
@@ -24,6 +28,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/connect-redis": "^0.0.16",
     "@types/ioredis": "^4.22.0",
     "@types/node": "^14.14.31",
     "@types/uuid": "^8.3.0",
