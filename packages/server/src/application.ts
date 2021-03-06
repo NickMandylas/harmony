@@ -45,9 +45,9 @@ export default class Application {
 
       this.host.register(mercurius, {
         schema,
-        context: (req, res) => ({
-          req,
-          res,
+        context: (request, reply) => ({
+          request,
+          reply,
           redis: Redis(),
           em: this.orm.em.fork(),
           twilio: new Twilio(
