@@ -8,13 +8,13 @@ type Props = {
 }
 
 const Layout = ({ children, title = 'This is the default title' }: Props) => (
-  <div>
+  <div className="container mx-auto">
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
-    <header>
+    <header className="flex justify-center">
       <nav>
         <Link href="/">
           <a>Home</a>
@@ -33,7 +33,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => (
     {children}
     <footer>
       <hr />
-      <span>I'm here to stay (Footer)</span>
+      <span>Copyright Harmony 2021</span>
     </footer>
   </div>
 )
